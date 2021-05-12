@@ -173,7 +173,7 @@
                 <useRuntimeException>true</useRuntimeException>]
                 <openApiNullable>true</openApiNullable>
               </configOptions>
-              <templateDirectory>${project.build.resources[0].directory}/mustaches/client</templateDirectory>
+<!--              <templateDirectory>${project.build.resources[0].directory}/mustaches/client</templateDirectory>-->
               <output>${project.build.directory}/generated-sources/openapi/client</output>
               <addCompileSourceRoot>true</addCompileSourceRoot>
             </configuration>
