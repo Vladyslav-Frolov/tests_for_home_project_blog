@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -28,7 +27,7 @@ public class SecurityApiIT {
     @Parameterized.Parameter
     public String actionSummary;
     @Parameterized.Parameter(1)
-    public Function<ApiClient, ApiResponse> action;
+    public Function<ApiClient, ApiResponse<?>> action;
     @Parameterized.Parameter(2)
     public boolean admin;
     @Parameterized.Parameter(3)
@@ -39,10 +38,10 @@ public class SecurityApiIT {
     public boolean any;
 
     @Parameterized.Parameters(name = "{index}-{0}")
-    public static Iterable data() {
+    public static Iterable<?> data() {
         Set<Object> data = new HashSet<>();
 
-        Function<ApiClient, ApiResponse> action = (ApiClient apiClient) -> {
+        Function<ApiClient, ApiResponse<?>> action = (ApiClient apiClient) -> {
             CurrentUserApi currentUserApi = new CurrentUserApi(apiClient);
             return currentUserApi.getCurrentUserWithHttpInfo();
         };
@@ -489,7 +488,7 @@ public class SecurityApiIT {
     private int getStatusCode(ApiClient unauthorizedClient) {
         int statusCode;
         try {
-            ApiResponse resp = action.apply(unauthorizedClient);
+            ApiResponse<?> resp = action.apply(unauthorizedClient);
             statusCode = resp.getStatusCode();
         } catch (ApiException e) {
             statusCode = e.getCode();
